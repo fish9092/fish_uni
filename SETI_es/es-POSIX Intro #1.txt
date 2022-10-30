@@ -1,0 +1,121 @@
+1. In quale sezione del manuale troviamo i formati di file?
+
+--i formati di file si trovano nella sezione 5 
+
+
+2. A che cosa serve -p in mkdir(1) ?	
+
+--crea una directory "figlia", e nel caso non esistesse anche quella "padre", in caso quest'ultima esistesse gia non ritorna alcun errore.Senza -p ritorna errore in caso  la directory "padre" non  esista.
+
+
+3. Che cosa fa il comando apropos -s 1 directory | grep current ?
+
+--Cerca solamente nella sezione indicata del manuale ( corrispondente a -s, vedere domanda 1), i  sia comandi con nome che comprende (indipendentemente dalle posizioni in cui siano) i caratteri 	  immessi come imput,sia i comandi con nome simile, aggiungendo il comando "grep" vengono visualizzati  solamente i risultati che comprendono ciò che viene dato come imput a "grep" (NB le funzionalità   di "apropos" sono le stesse del comando "man -k".
+   	
+
+4. Come faccio a “stampare” il nome della directory di lavoro?
+
+-- Per stampare il nome della directory di lavoro basta scrivere sulla bash il comando "dirs" nel caso volessi solamente la directory (indirizzo relativo?), oppure il comando "pwd" nel caso volessi stampare il suo indirizzo assoluto della directory.
+
+
+5. Come posso vedere se un comando, per esempio cd, `e interno (built-in) o esterno? (Suggerimento: leggete
+bene il testo, il comando per farlo `e gi`a stato nominato ,)
+
+--Per distinguere un comando built-in da uno esterno è sufficiente cercare il comando in questione con 	  il manuale in quanto se il camndo dovesse essere built-in allora la ricerca nel manuale non produrrebbe alcun risultato. 
+
+
+6. Come faccio, con il comando ls, a elencare anche i file che iniziano con . (il carattere punto)?
+
+--Per trovare anche i file nascosti devo utilizzare il comando "ls -a".
+
+
+7. Cosa cambia se uso -h con ls?
+
+--Se utilizzo "ls -h" mi visualizza la dimensione dei file con unità di misura standard ma senza aggiungere  "-hl" non vengono mostrate informazioni aggiuntive (seppur convertite).
+
+
+8.E possibile creare una directory il cui nome contenga degli spazi? 
+
+--Si, ma è necessario includere il nome della directory tra gli apici " ' " oppure tramite un escape " \ " per segnalare la corretta lettura del carattere "spazio" all'interno della directory.
+
+
+9.Dove porta il comando cd senza argomenti? Come potete fare in modo che vi porti da un’altra parte?
+Potrebbe servirvi pwd per vedere la differenza
+
+-- il comando "cd" utilizzato senza argomenti porta alla "pagina principale" (~) dell'utente; per fare in modo che ci porti da un'altra parte basta aggiungere l'indirizo della directory desiderata per spostarsi aribitrariamente tra le directory esistenti.
+
+10.Che differenza c’`e fra cd e pushd?
+
+--La differenza tra cd e pushd è che "pushd" crea uno stack delle directory utilizzate permettendo di muoversi arbitrariamente tra di esse, mentre cd 'ricorda' solamente la directory precedente.
+
+
+11.A cosa serve which? Qual `e il suo exit-status?
+
+--Serve per trovare l'indirizzo assoluto del file che contiene il comando immesso come imput; il suo exit status è :
+0 in caso tutti i comandi siano esistenti ed eseguibili.
+1 in caso uno o più dei comandi cercati sia inesistente o ineseguibile,
+2 se viene inserita una operazione non valida (qualcosa che non sia un comando).
+
+
+12.. Create un alias (usando alias) per elencare i file con estensione .c; ricordatevi che la shell separa il suo
+input dove trova degli spazi ed espande le wildcard. . .
+
+--il comando Alias richiede due operandi in imput, rispettivamente una stringa arbitraria ed un comando shell; esso permette di attribuire alla stringa messa come primo parametro le funzionalità del comando shell inserito. 
+
+
+13.Stampate le prime 3 linee del file /etc/group, usando head(1). Poi, stampatene le ultime 3, usando tail(1)
+
+--head -3 /etc/group && tail -3 /etc/group
+
+
+14. Scrivete un comando per contare quanti utenti hanno /bin/false come shell.   (CONTROLLARE)
+• per sapere dove guardare, passwd(5)
+• per contare le linee che contengono un certo pattern, grep(1)
+• per estrarre, da ogni linea, solo il campo “optional user command interpreter” (cio`e la shell dell’utente), cut(1)
+
+--cat /etc/passwd | grep bin/false | cut -d ":" -f 1 | cat -n
+Con questo comando vengono estratti tutti gli utenti DEL sistema, per contarli aggiungiamo dopo "cut" "| "
+
+
+15. Elencate, senza duplicazioni, le shell specificate in passwd; vi servir`a uniq(1) ma non solo: leggete bene
+cosa fa uniq e che altro vi suggerisce di guardare la sua man-page.
+
+--cut -d ":" -f 7 /etc/passwd |sort -u
+Il comando sovrastante utilizza "cut" per selezionare solamente tutti i nomi delle diverse shell, l'output di "cut" viene poi passato come imput a "sort" che con "-u" risulta essere analogo ai comandi "sort" e "uniq" contemporaneamente, il primo fa un ordinamento mentre il secondo ritorna tutte le righe presenti almeno una volta stampandole senza duplicazioni.
+
+
+16. Elencate tutti gli utenti del sistema, in ordine alfabetico inverso.
+
+--cut -d ":" -f 1 /etc/passwd |sort -r
+il "-r" inverte l'ordine dato da sort.
+
+
+17. Elencate i PID (e nient’altro) di tutti i processi del sistema (sono tanti, se ve ne escono meno di cento c’`e
+probabilmente qualcosa che non quadra); vedete ps(1)
+• Assicuratevi che ps scriva solo i PID, senza nessuna intestazione
+• Scrivete un comando per contare quanti sono; vedete wc(1)
+
+--ps -e | cut -b 1-7
+Questo è il comando che permette di catturare solamente i pid.
+--ps -e | wc -l
+Questo è invece il comando che ritorna il numero totale dei processi.
+
+
+18.Dire cosa fanno i seguenti comandi:
+• top; se installato (non lo `e di default su molte distribuzioni), potete anche provare htop
+• pstree
+• xdg-open .
+• find ˜ -type d -empty -ls.
+
+--Il comando "pstree" permette di visualizzare i processi in esecuzione sotto forma di albero.
+il comando "top" o "htop" permette di vedere in real-time i processi in esecuzione.
+il comando "xdg-open" permette di aprire sia qualunque tipo di file presente nella directory di lavoro, sia una specifica directory contenuta in quella corrente (arbitrariamente se specificata, quella sulla quale si sta lavorando se si utilizza ".") ,  l'apertura avviene però solamente a livello grafico senza apportare modifiche a livello di terminale(?) .
+il comando "find ˜ -type d -empty -ls"  effettura una ricerca sotto la directory "˜ " per tutte le directory (-type d) vuote (-empty) e le elenca tramite "ls".
+
+
+19. esce con exit-status 42; potete usare, indifferentemente, return dal main o la funzione exit(3) (dove il
+numero 3 indica la sezione del manuale, ovviamente). Verificate che il programma funzioni visualizzando,
+dopo averlo lanciato, il valore della variabile $? dalla shell (Scrivete, compilate e testate un programma C che. . .)
+
+--exit(42);
+
