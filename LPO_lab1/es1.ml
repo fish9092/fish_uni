@@ -3,4 +3,4 @@ let rec prod ls =
     [] -> 1
   | x::t -> x*prod t;;
 
-prod[2;4;3];;
+prod[2;4;3] = 24;;
