@@ -1,3 +1,3 @@
 # fish_uni
-fish compiti room! \n
+fish compiti room!   
 essercizi gratis!!!
