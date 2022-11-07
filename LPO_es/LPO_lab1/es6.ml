@@ -1,8 +1,7 @@
 let rec merge (ls1, ls2) =
   match (ls1,ls2) with
-    ( (x1::t1 as tl1) , (x2::t2 as tl2)) -> if x1 < x2 
-      then x1::merge(t1,tl2) 
-      else x2::merge(tl1,t2)
+    ( (x1::t1 as tl1) , (x2::t2 as tl2)) -> if x1 < x2  then x1::merge(t1,tl2) 
+     				        else x2::merge(tl1,t2)
   | ([],ls2) -> ls2
   | (ls1,[]) -> ls1;;
   
